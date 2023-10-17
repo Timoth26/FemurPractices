@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+.black_btn {
+  @apply rounded-full py-1.5 px-5 transition-all items-center bg-gray-50 shadow-md shadow-grass font-bold 
+    text-grass dark:bg-gray-900 dark:text-gray-50 hover:text-gray-50 hover:bg-gray-900 
+    dark:hover:text-purple-400 dark:hover:bg-gray-50 hover:shadow-xl dark:shadow-mint;
+}
+
+.home_main_text {
+  @apply font-poppins text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-grass dark:to-mint;
+}
+
+.show {
+  display: block;
+  transition: opacity 400ms, visibility 400ms;
+  opacity: 1;
+  visibility: visible;
+}
+.hide {
+  visibility: hidden;
+  transition: opacity 400ms, visibility 400ms;
+  opacity: 0;
+}
