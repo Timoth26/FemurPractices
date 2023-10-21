@@ -6,7 +6,7 @@ from .serializers import PrivateUserSerializer, CompanyUserSerializer
 
 from .serializers import MyTokenObtainPairSerializer, BaseUserSerializer
 
-class ObtainTokenPairWithColorView(TokenObtainPairView):
+class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 

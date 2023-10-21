@@ -8,7 +8,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
-        token['confirmed'] = user.confirmed
+        token['email'] = user.email
         return token
     
 class BaseUserSerializer(serializers.ModelSerializer):

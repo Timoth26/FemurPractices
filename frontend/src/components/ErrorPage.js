@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/global.css";
+import "../styles/global.css";
 
 function ErrorPage({error}) {
 

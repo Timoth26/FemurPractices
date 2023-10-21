@@ -1,9 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import "../styles/global.css";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function LoginPopup({ isShowLogin, onClose }) {
   const wrapperRef = useRef(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+  let { login } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -22,6 +30,38 @@ function LoginPopup({ isShowLogin, onClose }) {
   const handleClose = () => {
     onClose();
   };
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8000/api/token/", // Zmień na właściwy endpoint logowania
+  //       { email, password },
+  //       { headers: { "Content-Type": "application/json" } }
+  //     );
+
+  //     const { access_token, refresh_token } = response.data;
+
+  //     // Zapisz tokeny w lokalnym składowaniu (localStorage)
+  //     localStorage.setItem("access_token", access_token);
+  //     localStorage.setItem("refresh_token", refresh_token);
+
+  //     // Ustaw nagłówek autoryzacji dla przyszłych żądań
+  //     axios.defaults.headers.common[
+  //       "Authorization"
+  //     ] = `Bearer ${access_token}`;
+
+  //     // Zamknij okno logowania
+  //     onClose();
+  //     console.log(access_token)
+  //     navigate('/register')
+      
+  //   } catch (error) {
+  //     console.error("Błąd logowania", error);
+  //     alert("ERROR")
+  //   }
+  // };
 
   return (
     <div
@@ -50,7 +90,7 @@ function LoginPopup({ isShowLogin, onClose }) {
                 <path d="M7 22H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h2a1 1 0 0 0 0-2H5a5.006 5.006 0 0 0-5 5v14a5.006 5.006 0 0 0 5 5h2a1 1 0 0 0 0-2Z" />
               </svg>
             </div>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={login}>
               <div>
                 <label
                   for="email"
@@ -65,6 +105,8 @@ function LoginPopup({ isShowLogin, onClose }) {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-50 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required=""
+                  // value={email}
+                  // onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -81,6 +123,8 @@ function LoginPopup({ isShowLogin, onClose }) {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
+                  // value={password}
+                  // onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-between">

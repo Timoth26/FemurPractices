@@ -3,7 +3,7 @@ import Nav from "./Nav";
 import "../styles/global.css";
 import { useState } from "react";
 import LoginPopup from "./LoginPopup";
-import { Link, useNavigate} from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 
 function Home() {
   const [isShowLogin, setIsShowLogin] = useState(false);
