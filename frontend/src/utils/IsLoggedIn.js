@@ -1,9 +1,7 @@
-import React from 'react'
+const IsLoggedIn = () => {
+  let email = localStorage.getItem("email");
 
-function IsLoggedIn() {
-  return (
-    <div>IsLoggedIn</div>
-  )
-}
+  return email ? email : false;
+};
 
-export default IsLoggedIn
+export default IsLoggedIn;

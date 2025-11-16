@@ -1,10 +1,10 @@
-import Nav from "../Nav";
-import RadioChoice from "../RadioChoice";
-import PrivateUserRegistration from "./PrivateUserRegistration";
+import Nav from "../components/Nav";
+import RadioChoice from "../components/RadioChoice";
+import PrivateUserRegistration from "../components/registration/PrivateUserRegistration";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CompanyUserRegistration from "./CompanyUserRegistration";
-import registerUser from "./ApiRegistration";
+import CompanyUserRegistration from "../components/registration/CompanyUserRegistration";
+import registerUser from "../context/ApiRegistration";
 
 export default function Registration() {
 
@@ -23,13 +23,13 @@ export default function Registration() {
   const [university, setUniversity] = useState("");
   const [subject, setSubject] = useState("");
   const [indexNr, setIndexNr] = useState("");
-  const [semester, setSemester] = useState("");
-  const [endYear, setEndYear] = useState("");
+  const [semester, setSemester] = useState(null);
+  const [endYear, setEndYear] = useState(null);
 
   const [compNr, setCompNr] = useState("");
   const [compName, setCompName] = useState("");
 
-  const [street, setStreet] = useState("");
+  const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [region, setRegion] = useState("");
   const [postalCode, setPostalCode] = useState("");
@@ -91,7 +91,7 @@ export default function Registration() {
       passwordRepeat !== "" &&
       rulesAccepted &&
       personalDataAccepted &&
-      street &&
+      address &&
       city &&
       region &&
       postalCode &&
@@ -107,7 +107,7 @@ export default function Registration() {
         userData = {
           email: email,
           password: password,
-          street: street,
+          address: address,
           city: city,
           region: region,
           postal_code: postalCode,
@@ -128,7 +128,7 @@ export default function Registration() {
         userData = {
           email: email,
           password: password,
-          street: street,
+          address: address,
           city: city,
           region: region,
           postal_code: postalCode,
@@ -148,6 +148,7 @@ export default function Registration() {
 
   return (
     <>
+      <Nav position={false} showButtons={false} />
       <form className="mx-auto max-w-3xl py-5" onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 dark:border-gray-300 pb-12">
@@ -254,8 +255,8 @@ export default function Registration() {
               setNames={setNames}
               lastName={lastName}
               setLastName={setLastName}
-              street={street}
-              setStreet={setStreet}
+              address={address}
+              setAddress={setAddress}
               city={city}
               setCity={setCity}
               region={region}
@@ -280,8 +281,8 @@ export default function Registration() {
           )}
           {selectedOption === "company" ? (
             <CompanyUserRegistration
-              street={street}
-              setStreet={setStreet}
+              address={address}
+              setAddress={setAddress}
               city={city}
               setCity={setCity}
               region={region}

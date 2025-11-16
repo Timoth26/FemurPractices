@@ -1,9 +1,10 @@
 import React from "react";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 import "../styles/global.css";
 import { useState } from "react";
-import LoginPopup from "./LoginPopup";
-import { useNavigate} from "react-router-dom"
+import LoginPopup from "../components/LoginPopup";
+import { useNavigate } from "react-router-dom";
+import IsLoggedIn from "../utils/IsLoggedIn";
 
 function Home() {
   const [isShowLogin, setIsShowLogin] = useState(false);
@@ -22,25 +23,38 @@ function Home() {
     <>
       <Nav handleLoginClick={handleLoginclick} />
       <LoginPopup isShowLogin={isShowLogin} onClose={handleCloseLoginPopup} />
-      <div className="flex items-center justify-center h-screen mx-auto">
-        <div className="text-left mr-40">
-          <h1 className="home_main_text">Znajdź juz dziś</h1>
-          <h1 className="home_main_text"> swoje wymarzone</h1>
-          <h1 className="home_main_text"> praktyki!</h1>
+      <div className="flex flex-col lg:flex-row items-center justify-center lg:h-screen mx-auto">
+        <div className="text-left lg:mr-40 mb-8 lg:mb-0 ">
+          <h1 className="home_main_text">Znajdź już dziś</h1>
+          <h1 className="home_main_text">swoje wymarzone</h1>
+          <h1 className="home_main_text">praktyki!</h1>
           <br />
           <h5 className="home_main_text">W najlepszym serwisie</h5>
           <h5 className="home_main_text">rekrutacyjnym w Polsce!</h5>
           <br />
-          <button className="black_btn" type="button" onClick={()=>navigate('/register')}>
-            Dołącz do nas!
-          </button>
+          {IsLoggedIn() ? (
+            <button
+              className="black_btn mt-4 lg:mt-8"
+              type="button"
+              onClick={() => navigate("/search")}
+            >
+              Zacznij szukać
+            </button>
+          ) : (
+            <button
+              className="black_btn mt-4 lg:mt-8"
+              type="button"
+              onClick={() => navigate("/register")}
+            >
+              Dołącz do nas!
+            </button>
+          )}
         </div>
         <video
-          className="w-full h-auto sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-2/5 rounded-lg shadow-xl shadow-grass dark:shadow-mint"
+          className="hidden lg:block w-full h-auto lg:w-1/3 xl:w-2/5 rounded-lg shadow-xl shadow-grass dark:shadow-mint"
           loop
           muted
           autoPlay
-          // poster={process.env.PUBLIC_URL + "/images/video-poster.jpg"}
         >
           <source
             src={process.env.PUBLIC_URL + "/images/video1.webm"}

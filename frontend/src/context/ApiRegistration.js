@@ -10,7 +10,7 @@ const registerUser = async (userData, navigate) => {
     navigate("/registration/succeed");
   } catch (error) {
     console.error("Error:", error.response.data);
-    navigate("/error")
+    // navigate("/error")
   }
 };
 

@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from "react";
 
 function CompanyUserRegistration({
-  street,
-  setStreet,
+  address,
+  setAddress,
   city,
   setCity,
   region,
@@ -83,6 +83,8 @@ function CompanyUserRegistration({
             ""
           )}
 
+          {selectedOption === true ? setCompNr(null) : ""}
+
           <div className="sm:col-span-6">
             <label
               htmlFor="comp-name"
@@ -106,7 +108,7 @@ function CompanyUserRegistration({
 
           <div className="col-span-full">
             <label
-              htmlFor="street-address"
+              htmlFor="address"
               className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-50"
             >
               Adres*
@@ -114,10 +116,10 @@ function CompanyUserRegistration({
             <div className="mt-2">
               <input
                 type="text"
-                name="street-address"
-                id="street-address"
-                value={street}
-                onChange={(e) => setStreet(e.target.value)}
+                name="address"
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-grass focus:border-grass block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-50 dark:focus:ring-mint dark:focus:border-mint"
                 required
                 maxLength="60"

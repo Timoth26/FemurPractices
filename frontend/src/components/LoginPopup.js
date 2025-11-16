@@ -9,6 +9,7 @@ function LoginPopup({ isShowLogin, onClose }) {
   const wrapperRef = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(true);
 
   const navigate = useNavigate();
   let { login } = useAuth();
@@ -28,41 +29,16 @@ function LoginPopup({ isShowLogin, onClose }) {
   }, [onClose]);
 
   const handleClose = () => {
+    setError(null);
     onClose();
   };
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/api/token/", // Zmień na właściwy endpoint logowania
-  //       { email, password },
-  //       { headers: { "Content-Type": "application/json" } }
-  //     );
-
-  //     const { access_token, refresh_token } = response.data;
-
-  //     // Zapisz tokeny w lokalnym składowaniu (localStorage)
-  //     localStorage.setItem("access_token", access_token);
-  //     localStorage.setItem("refresh_token", refresh_token);
-
-  //     // Ustaw nagłówek autoryzacji dla przyszłych żądań
-  //     axios.defaults.headers.common[
-  //       "Authorization"
-  //     ] = `Bearer ${access_token}`;
-
-  //     // Zamknij okno logowania
-  //     onClose();
-  //     console.log(access_token)
-  //     navigate('/register')
-      
-  //   } catch (error) {
-  //     console.error("Błąd logowania", error);
-  //     alert("ERROR")
-  //   }
-  // };
-
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      const err = await login(e)
+        setError(err)
+    };
+    
   return (
     <div
       className={`${
@@ -77,7 +53,7 @@ function LoginPopup({ isShowLogin, onClose }) {
         >
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <div className="flex justify-between">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-gray-50">
+              <h1 className="text-xl font-bold mr-4 leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-gray-50">
                 Zaloguj się do swojego konta
               </h1>
               <svg
@@ -90,7 +66,7 @@ function LoginPopup({ isShowLogin, onClose }) {
                 <path d="M7 22H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h2a1 1 0 0 0 0-2H5a5.006 5.006 0 0 0-5 5v14a5.006 5.006 0 0 0 5 5h2a1 1 0 0 0 0-2Z" />
               </svg>
             </div>
-            <form className="space-y-4 md:space-y-6" onSubmit={login}>
+            <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
               <div>
                 <label
                   for="email"
@@ -123,10 +99,9 @@ function LoginPopup({ isShowLogin, onClose }) {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
-                  // value={password}
-                  // onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              {error ? "" : <p className="text-red-500 text-sm">Błędne hasło lub email</p>}
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -147,12 +122,12 @@ function LoginPopup({ isShowLogin, onClose }) {
                     </label>
                   </div>
                 </div>
-                <a
+                {/* <a
                   href="#"
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Zapomniałeś hasła?
-                </a>
+                </a> */}
               </div>
               <div className="flex items-center justify-center">
                 <button type="submit" className="black_btn">
