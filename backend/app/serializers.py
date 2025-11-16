@@ -1,13 +1,7 @@
-# import serializers from the REST framework
 from rest_framework import serializers
+from .models import Offer
 
-# import the todo data model
-# from .models import Todo
-
-# # create a serializer class
-# class TodoSerializer(serializers.ModelSerializer):
-
-# 	# create a meta class
-# 	class Meta:
-# 		model = Todo
-# 		fields = ('id', 'title','description','completed')
+class OfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Offer
+        fields = '__all__'

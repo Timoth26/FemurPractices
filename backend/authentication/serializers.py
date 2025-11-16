@@ -9,6 +9,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
         token['email'] = user.email
+        token['type'] = user.type
         return token
     
 class BaseUserSerializer(serializers.ModelSerializer):
@@ -18,7 +19,7 @@ class BaseUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BaseUser
-        fields = ('email', 'password', 'street', 'city', 'region', 'postal_code', 'phone_nr', 'rules', 'privacy', 'type')
+        fields = ('email', 'password', 'address', 'city', 'region', 'postal_code', 'phone_nr', 'rules', 'privacy', 'type', 'trade')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -31,14 +32,21 @@ class BaseUserSerializer(serializers.ModelSerializer):
 
 class PrivateUserSerializer(BaseUserSerializer):
 
+    resume = serializers.FileField(required=False)
     class Meta:
         model = PrivateUser
-        fields = BaseUserSerializer.Meta.fields + ('first_name', 'last_name')
+        fields = BaseUserSerializer.Meta.fields + ('first_name', 'last_name', 'university', 'subject', 'index_nr', 'semester', 'end_year', 'resume')
         extra_kwargs = BaseUserSerializer.Meta.extra_kwargs
 
 class CompanyUserSerializer(BaseUserSerializer):
 
     class Meta:
         model = CompanyUser
-        fields = BaseUserSerializer.Meta.fields + ('company_name',)
+        fields = BaseUserSerializer.Meta.fields + ('company_name', 'company_nr')
         extra_kwargs = BaseUserSerializer.Meta.extra_kwargs
+
+class CandidatSerializer(BaseUserSerializer):
+        class Meta:
+            model = PrivateUser
+            fields = ['first_name', 'last_name', 'university', 'subject', 'semester', 'end_year', 'phone_nr', 'email', 'resume', 'id']
+        

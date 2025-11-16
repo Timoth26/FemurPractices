@@ -10,8 +10,6 @@ class CustomUserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
 
-        # validate_password(password)
-
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -20,18 +18,16 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
-        # validate_password(password)
-
         return self.create_user(email, password, **extra_fields)
 
 class BaseUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     type = models.CharField(default='private')
-    street = models.CharField(max_length=60)
+    address = models.CharField(max_length=60)
     city = models.CharField(max_length=60)
     region = models.CharField(max_length=60)
-    postal_code = models.CharField(max_length=6) ## poszukac obiektow
-    phone_nr = models.CharField(max_length=15) ## poszukac obiektow
+    postal_code = models.CharField(max_length=6)
+    phone_nr = models.CharField(max_length=15)
     rules = models.BooleanField(default=True)
     privacy = models.BooleanField(default=True)
     trade = models.BooleanField(default=False)
@@ -41,7 +37,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['street', 'city', 'region', 'postal_code', 'phone_nr', 'rules', 'privacy', 'type']
+    REQUIRED_FIELDS = ['address', 'city', 'region', 'postal_code', 'phone_nr', 'rules', 'privacy', 'type']
 
     def __str__(self):
         return self.email
@@ -54,6 +50,7 @@ class PrivateUser(BaseUser):
     index_nr =models.CharField(max_length=20, null=True, blank=True)
     semester = models.IntegerField(null=True, blank=True)
     end_year = models.IntegerField(null=True, blank=True)
+    resume = models.FileField(upload_to='resumes/', null=True, blank=True)
 
     REQUIRED_FIELDS = ['first_name', 'last_name']
 

@@ -4,11 +4,10 @@ from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from .serializers import PrivateUserSerializer, CompanyUserSerializer
 
-from .serializers import MyTokenObtainPairSerializer, BaseUserSerializer
+from .serializers import MyTokenObtainPairSerializer
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
 
 class BaseUserCreate(CreateAPIView):
 
